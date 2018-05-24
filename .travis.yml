@@ -1,10 +1,13 @@
 language: c
 dist: trusty
 sudo: required
+
 notifications:
   email: false
+
 git:
   submodules: true
+
 matrix:
   include:
   - os: osx
@@ -18,6 +21,7 @@ matrix:
     - mkdir faust/build/forlib && cd faust/build/forlib
     - cmake .. -DCMAKE_BUILD_TYPE=Release -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
     - make staticlib
+
   - os: osx
     compiler: clang
     env: ziplib='libfaust_macos64_llvm6.0.0_debug'
@@ -29,15 +33,19 @@ matrix:
     - mkdir faust/build/forlib && cd faust/build/forlib
     - cmake .. -DCMAKE_BUILD_TYPE=Debug -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
     - make staticlib
+
   - os: linux
     compiler: gcc
     env: ziplib='libfaust_linux64_llvm6.0.0_release'
-    packages:
-    - gcc-5
-    - g++-5
-    - pkg-config
-    - libedit-dev
-    install:
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-5
+          - g++-5
+          - pkg-config
+          - libedit-dev
     install:
     - git submodule update --init --recursive
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
@@ -46,14 +54,19 @@ matrix:
     - mkdir faust/build/forlib && cd faust/build/forlib
     - cmake .. -DCMAKE_BUILD_TYPE=Release -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DCMAKE_C_FLAGS=-m64 -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
     - make staticlib
+
   - os: linux
     compiler: gcc
     env: ziplib='libfaust_linux64_llvm6.0.0_debug'
-    packages:
-    - gcc-5
-    - g++-5
-    - pkg-config
-    - libedit-dev
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-5
+          - g++-5
+          - pkg-config
+          - libedit-dev
     install:
     - git submodule update --init --recursive
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
