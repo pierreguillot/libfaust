@@ -32,9 +32,14 @@ matrix:
   - os: linux
     compiler: gcc
     env: ziplib='libfaust_linux64_llvm6.0.0_release'
+    packages:
+    - gcc-5
+    - g++-5
+    - pkg-config
+    - libedit-dev
+    install:
     install:
     - git submodule update --init --recursive
-    - sudo apt-get install -y pkg-config libedit-dev
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
     - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
     script:
@@ -44,9 +49,13 @@ matrix:
   - os: linux
     compiler: gcc
     env: ziplib='libfaust_linux64_llvm6.0.0_debug'
+    packages:
+    - gcc-5
+    - g++-5
+    - pkg-config
+    - libedit-dev
     install:
     - git submodule update --init --recursive
-    - sudo apt-get install -y pkg-config libedit-dev
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
     - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
     script:
