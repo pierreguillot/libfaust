@@ -18,9 +18,9 @@ matrix:
     - curl -o ./llvm.tar.gz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
     - tar zxvf ./llvm.tar.gz && mv clang+llvm-6.0.0-x86_64-apple-darwin llvm
     script:
-    - mkdir faust/build/forlib && cd faust/build/forlib
-    - cmake .. -DCMAKE_BUILD_TYPE=Release -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
-    - make staticlib
+    - mkdir build && cd build
+    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release
+    - make
 
   - os: osx
     compiler: clang
@@ -30,9 +30,9 @@ matrix:
     - curl -o ./llvm.tar.gz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
     - tar zxvf ./llvm.tar.gz && mv clang+llvm-6.0.0-x86_64-apple-darwin llvm
     script:
-    - mkdir faust/build/forlib && cd faust/build/forlib
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
-    - make staticlib
+    - mkdir build && cd build
+    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Debug
+    - make
 
   - os: linux
     compiler: gcc
@@ -51,9 +51,9 @@ matrix:
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
     - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
     script:
-    - mkdir faust/build/forlib && cd faust/build/forlib
-    - cmake .. -DCMAKE_BUILD_TYPE=Release -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DCMAKE_C_FLAGS=-m64 -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
-    - make staticlib
+    - mkdir build && cd build
+    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Release
+    - make
 
   - os: linux
     compiler: gcc
@@ -72,6 +72,6 @@ matrix:
     - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
     - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
     script:
-    - mkdir faust/build/forlib && cd faust/build/forlib
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug -DINCLUDE_STATIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DCMAKE_C_FLAGS=-m64 -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./../../llvm/lib/cmake/llvm -C../backends/all.cmake
-    - make staticlib
+    - mkdir build && cd build
+    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Debug
+    - make
