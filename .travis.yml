@@ -20,7 +20,7 @@ matrix:
     script:
     - mkdir build && cd build
     - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release
-    - make
+    - cmake --build .
 
   - os: osx
     compiler: clang
@@ -53,7 +53,7 @@ matrix:
     script:
     - mkdir build && cd build
     - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Release
-    - make
+    - cmake --build .
 
   - os: linux
     compiler: gcc
@@ -74,4 +74,4 @@ matrix:
     script:
     - mkdir build && cd build
     - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Debug
-    - make
+    - cmake --build .
