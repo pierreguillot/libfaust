@@ -8,35 +8,28 @@ notifications:
 git:
   submodules: true
 
+env:
+  - BUILD_TYPE=Release
+  - BUILD_TYPE=Debug
+  - LLVM_VERSION=6.0.0
+
 matrix:
   include:
   - os: osx
     compiler: clang
-    env: ziplib='libfaust_macos64_llvm6.0.0_release'
+    env: ziplib='libfaust_macos64_llvm$LLVM_VERSION_release'
     install:
     - git submodule update --init --recursive
-    - curl -o ./llvm.tar.gz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
-    - tar zxvf ./llvm.tar.gz && mv clang+llvm-6.0.0-x86_64-apple-darwin llvm
+    - curl -o ./llvm.tar.gz http://releases.llvm.org/$LLVM_VERSION/clang+llvm-$LLVM_VERSION-x86_64-apple-darwin.tar.xz
+    - tar zxvf ./llvm.tar.gz && mv clang+llvm-$LLVM_VERSION-x86_64-apple-darwin llvm
     script:
     - mkdir build && cd build
-    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release
+    - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     - cmake --build .
-
-  - os: osx
-    compiler: clang
-    env: ziplib='libfaust_macos64_llvm6.0.0_debug'
-    install:
-    - git submodule update --init --recursive
-    - curl -o ./llvm.tar.gz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
-    - tar zxvf ./llvm.tar.gz && mv clang+llvm-6.0.0-x86_64-apple-darwin llvm
-    script:
-    - mkdir build && cd build
-    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Debug
-    - make
 
   - os: linux
     compiler: gcc
-    env: ziplib='libfaust_linux64_llvm6.0.0_release'
+    env: ziplib='libfaust_linux64_llvm$LLVM_VERSION_release'
     addons:
       apt:
         sources:
@@ -48,30 +41,9 @@ matrix:
           - libedit-dev
     install:
     - git submodule update --init --recursive
-    - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
-    - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
+    - curl -o ./llvm.tar.xz http://releases.llvm.org/$LLVM_VERSION/clang+llvm-$LLVM_VERSION-x86_64-linux-gnu-ubuntu-14.04.tar.xz
+    - tar xvf ./llvm.tar.xz && mv clang+llvm-$LLVM_VERSION-x86_64-linux-gnu-ubuntu-14.04 llvm
     script:
     - mkdir build && cd build
-    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Release
-    - cmake --build .
-
-  - os: linux
-    compiler: gcc
-    env: ziplib='libfaust_linux64_llvm6.0.0_debug'
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-5
-          - g++-5
-          - pkg-config
-          - libedit-dev
-    install:
-    - git submodule update --init --recursive
-    - curl -o ./llvm.tar.xz http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
-    - tar xvf ./llvm.tar.xz && mv clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04 llvm
-    script:
-    - mkdir build && cd build
-    - cmake .. -DUSE_LLVM_CONFIG=off -DLLVM_DIR=./llvm/lib/cmake/llvm -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=Debug
+    - cmake .. -DCMAKE_C_FLAGS=-m64 -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     - cmake --build .
