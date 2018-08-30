@@ -11,6 +11,7 @@ git:
 env:
   - BUILD_TYPE=Release
   - BUILD_TYPE=Debug
+env:
   - LLVM_VERSION=6.0.0
 
 matrix:
