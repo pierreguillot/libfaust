@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+
 ## Create Faust Lib
 message(STATUS "Faust Library")
 

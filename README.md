@@ -13,9 +13,10 @@
 
 ### Presentation
 
-The project aims to offer a set of pre-built faust libraries with the corresponding llvm libraries.
+The project aims to offer a set of pre-built Faust libraries with the corresponding llvm libraries.
 
 ### Dependencies
 
 - [llvm](http://llvm.org)
 - [faust](https://github.com/grame-cncm/faust.git)
+- [cmake](https://cmake.org/)
